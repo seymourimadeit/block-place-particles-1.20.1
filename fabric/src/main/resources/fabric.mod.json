@@ -17,10 +17,10 @@
     "environment": "*",
     "entrypoints": {
         "client": [
-            "games.enchanted.blockplaceparticles.FabricClientEntrypoint"
+            "tallestred.blockplaceparticles.FabricClientEntrypoint"
         ],
         "modmenu": [
-            "games.enchanted.blockplaceparticles.ModMenuIntegration"
+            "tallestred.blockplaceparticles.ModMenuIntegration"
         ]
     },
     "mixins": [
