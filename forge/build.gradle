@@ -24,11 +24,11 @@ mixin {
 legacyForge {
     version = "${minecraft_version}-${forge_version}"
 
-    validateAccessTransformers = true
+    //validateAccessTransformers = true
 
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
-        accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
+        accessTransformers.from(at.absolutePath)
     }
     parchment {
         minecraftVersion = parchment_minecraft
@@ -54,11 +54,20 @@ legacyForge {
     }
 }
 
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+obfuscation {
+    createRemappingConfiguration(configurations.localRuntime)
+}
+
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     compileOnly project(":common")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    modImplementation  ("dev.isxander:yet-another-config-lib:${yacl_version}-forge")
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1"))
 }
 
 jar {

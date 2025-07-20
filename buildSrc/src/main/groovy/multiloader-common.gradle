@@ -13,6 +13,13 @@ java {
     withJavadocJar()
 }
 
+dependencies {
+    implementation 'org.jetbrains:annotations:24.1.0'
+    compileOnly "dev.isxander:yet-another-config-lib:${yacl_version}-forge"
+    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+}
+
 repositories {
     mavenCentral()
     // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
@@ -98,7 +105,12 @@ processResources {
             "forge_version": forge_version,
             "forge_loader_version_range": forge_loader_version_range,
             'credits'                      : credits,
-            'java_version'                 : java_version
+            'java_version'                 : java_version,
+            'mod_issues': mod_issues,
+            'mod_version': mod_version,
+            'mod_homepage': mod_homepage,
+            'yacl_version': yacl_version,
+            'mod_source':mod_source
     ]
 
     var jsonExpandProps = expandProps.collectEntries {
