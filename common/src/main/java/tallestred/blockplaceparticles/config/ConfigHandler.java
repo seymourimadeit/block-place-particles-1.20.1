@@ -23,14 +23,14 @@ public class ConfigHandler {
     public static final Path CONFIG_PATH = Services.PLATFORM.getConfigPath().resolve(ParticleInteractionsMod.MOD_ID + "_config.json");
 
     public static final ConfigClassHandler<ConfigHandler> HANDLER = ConfigClassHandler.createBuilder(ConfigHandler.class)
-        .id(new ResourceLocation(ParticleInteractionsMod.MOD_ID, "config"))
-        .serializer(config -> GsonConfigSerializerBuilder.create(config)
-            .appendGsonBuilder(builder -> builder.registerTypeAdapter(Fluid.class, new FluidTypeAdapter()))
-            .appendGsonBuilder(builder -> builder.registerTypeAdapter(ResourceLocation.class, new ResourceLocationTypeAdapter()))
-            .appendGsonBuilder(builder -> builder.registerTypeAdapter(ResourceLocationAndColour.class, new ResourceLocationAndColourTypeAdapter()))
-            .setPath(CONFIG_PATH)
-            .build())
-        .build();
+            .id(new ResourceLocation(ParticleInteractionsMod.MOD_ID, "config"))
+            .serializer(config -> GsonConfigSerializerBuilder.create(config)
+                    .appendGsonBuilder(builder -> builder.registerTypeAdapter(Fluid.class, new FluidTypeAdapter()))
+                    .appendGsonBuilder(builder -> builder.registerTypeAdapter(ResourceLocation.class, new ResourceLocationTypeAdapter()))
+                    .appendGsonBuilder(builder -> builder.registerTypeAdapter(ResourceLocationAndColour.class, new ResourceLocationAndColourTypeAdapter()))
+                    .setPath(CONFIG_PATH)
+                    .build())
+            .build();
 
     public static void load() {
         HANDLER.load();
@@ -172,20 +172,21 @@ public class ConfigHandler {
     public static int maxGrassBlade_onBreak = maxGrassBlade_onBreak_DEFAULT;
 
     public static final List<ResourceLocation> grassBlade_Blocks_DEFAULT = List.of(
-        RegistryHelpers.getLocationFromBlock(Blocks.ATTACHED_PUMPKIN_STEM),
-        RegistryHelpers.getLocationFromBlock(Blocks.PUMPKIN_STEM),
-        RegistryHelpers.getLocationFromBlock(Blocks.ATTACHED_MELON_STEM),
-        RegistryHelpers.getLocationFromBlock(Blocks.MELON_STEM),
-        RegistryHelpers.getLocationFromBlock(Blocks.SWEET_BERRY_BUSH),
-        RegistryHelpers.getLocationFromBlock(Blocks.BEETROOTS),
-        RegistryHelpers.getLocationFromBlock(Blocks.CARROTS),
-        RegistryHelpers.getLocationFromBlock(Blocks.POTATOES),
-        RegistryHelpers.getLocationFromBlock(Blocks.WHEAT),
-        RegistryHelpers.getLocationFromBlock(Blocks.TALL_GRASS),
-        RegistryHelpers.getLocationFromBlock(Blocks.SEAGRASS),
-        RegistryHelpers.getLocationFromBlock(Blocks.TALL_SEAGRASS),
-        RegistryHelpers.getLocationFromBlock(Blocks.HAY_BLOCK),
-        RegistryHelpers.getLocationFromBlock(Blocks.GRASS_BLOCK)
+            RegistryHelpers.getLocationFromBlock(Blocks.ATTACHED_PUMPKIN_STEM),
+            RegistryHelpers.getLocationFromBlock(Blocks.PUMPKIN_STEM),
+            RegistryHelpers.getLocationFromBlock(Blocks.ATTACHED_MELON_STEM),
+            RegistryHelpers.getLocationFromBlock(Blocks.MELON_STEM),
+            RegistryHelpers.getLocationFromBlock(Blocks.SWEET_BERRY_BUSH),
+            RegistryHelpers.getLocationFromBlock(Blocks.BEETROOTS),
+            RegistryHelpers.getLocationFromBlock(Blocks.CARROTS),
+            RegistryHelpers.getLocationFromBlock(Blocks.POTATOES),
+            RegistryHelpers.getLocationFromBlock(Blocks.WHEAT),
+            RegistryHelpers.getLocationFromBlock(Blocks.TALL_GRASS),
+            RegistryHelpers.getLocationFromBlock(Blocks.SEAGRASS),
+            RegistryHelpers.getLocationFromBlock(Blocks.TALL_SEAGRASS),
+            RegistryHelpers.getLocationFromBlock(Blocks.HAY_BLOCK),
+            RegistryHelpers.getLocationFromBlock(Blocks.GRASS_BLOCK),
+            RegistryHelpers.getLocationFromBlock(Blocks.GRASS)
     );
     @SerialEntry
     public static List<ResourceLocation> grassBlade_Blocks = grassBlade_Blocks_DEFAULT;
@@ -204,9 +205,9 @@ public class ConfigHandler {
     public static int maxHeavyGrassBlade_onBreak = maxHeavyGrassBlade_onBreak_DEFAULT;
 
     public static final List<ResourceLocation> heavyGrassBlade_Blocks_DEFAULT = List.of(
-        RegistryHelpers.getLocationFromBlock(Blocks.HANGING_ROOTS),
-        RegistryHelpers.getLocationFromBlock(Blocks.COBWEB),
-        RegistryHelpers.getLocationFromBlock(Blocks.TRIPWIRE)
+            RegistryHelpers.getLocationFromBlock(Blocks.HANGING_ROOTS),
+            RegistryHelpers.getLocationFromBlock(Blocks.COBWEB),
+            RegistryHelpers.getLocationFromBlock(Blocks.TRIPWIRE)
     );
     @SerialEntry
     public static List<ResourceLocation> heavyGrassBlade_Blocks = heavyGrassBlade_Blocks_DEFAULT;
@@ -225,8 +226,8 @@ public class ConfigHandler {
     public static int maxMossClump_onBreak = maxMossClump_onBreak_DEFAULT;
 
     public static final List<ResourceLocation> mossClump_Blocks_DEFAULT = List.of(
-        RegistryHelpers.getLocationFromBlock(Blocks.MOSS_CARPET),
-        RegistryHelpers.getLocationFromBlock(Blocks.MOSS_BLOCK)
+            RegistryHelpers.getLocationFromBlock(Blocks.MOSS_CARPET),
+            RegistryHelpers.getLocationFromBlock(Blocks.MOSS_BLOCK)
     );
     @SerialEntry
     public static List<ResourceLocation> mossClump_Blocks = mossClump_Blocks_DEFAULT;
@@ -263,28 +264,28 @@ public class ConfigHandler {
     public static int maxDust_onBreak = maxDust_onBreak_DEFAULT;
 
     public static final List<ResourceLocation> dust_Blocks_DEFAULT = List.of(
-        RegistryHelpers.getLocationFromBlock(Blocks.SAND),
-        RegistryHelpers.getLocationFromBlock(Blocks.SUSPICIOUS_SAND),
-        RegistryHelpers.getLocationFromBlock(Blocks.GRAVEL),
-        RegistryHelpers.getLocationFromBlock(Blocks.SUSPICIOUS_GRAVEL),
-        RegistryHelpers.getLocationFromBlock(Blocks.RED_SAND),
-        RegistryHelpers.getLocationFromBlock(Blocks.SOUL_SAND),
-        RegistryHelpers.getLocationFromBlock(Blocks.SOUL_SOIL),
-        RegistryHelpers.getLocationFromBlock(Blocks.WHITE_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.LIGHT_GRAY_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.GRAY_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.BROWN_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.RED_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.ORANGE_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.YELLOW_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.LIME_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.GREEN_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.CYAN_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.LIGHT_BLUE_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.BLUE_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.PURPLE_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.MAGENTA_CONCRETE_POWDER),
-        RegistryHelpers.getLocationFromBlock(Blocks.PINK_CONCRETE_POWDER)
+            RegistryHelpers.getLocationFromBlock(Blocks.SAND),
+            RegistryHelpers.getLocationFromBlock(Blocks.SUSPICIOUS_SAND),
+            RegistryHelpers.getLocationFromBlock(Blocks.GRAVEL),
+            RegistryHelpers.getLocationFromBlock(Blocks.SUSPICIOUS_GRAVEL),
+            RegistryHelpers.getLocationFromBlock(Blocks.RED_SAND),
+            RegistryHelpers.getLocationFromBlock(Blocks.SOUL_SAND),
+            RegistryHelpers.getLocationFromBlock(Blocks.SOUL_SOIL),
+            RegistryHelpers.getLocationFromBlock(Blocks.WHITE_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.LIGHT_GRAY_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.GRAY_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.BROWN_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.RED_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.ORANGE_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.YELLOW_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.LIME_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.GREEN_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.CYAN_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.LIGHT_BLUE_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.BLUE_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.PURPLE_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.MAGENTA_CONCRETE_POWDER),
+            RegistryHelpers.getLocationFromBlock(Blocks.PINK_CONCRETE_POWDER)
     );
     @SerialEntry
     public static List<ResourceLocation> dust_Blocks = dust_Blocks_DEFAULT;
