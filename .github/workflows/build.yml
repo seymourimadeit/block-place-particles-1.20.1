@@ -1,0 +1,91 @@
+name: Build
+
+on: [ workflow_dispatch ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1000
+          fetch-tags: true
+      - name: Setup JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew --max-workers 1 build -x :Common:compileJava
+      - uses: BrycensRanch/read-properties-action@v1
+        id: version
+        with:
+          file: gradle.properties
+          property: mod_version
+      - name: mc-publish-forge
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          version: ${{ steps.version.outputs.value }}
+          curseforge-id: 1311706
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GIT_TOKEN }}
+          modrinth-id: z0nJlqgw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files-primary: forge/build/libs/!(*source*|*dev*|*javadoc*|*slim*).jar
+          version-type: release
+          loaders: forge
+          game-versions: 1.20.1
+          java: 17
+          name: ""
+          changelog-file: changelog.*
+          curseforge-dependencies:
+            667299@3.6.6+1.20.1-forge(required)
+          modrinth-dependencies:
+            1eAoo2KR@3.6.6+1.20.1-forge(required)
+      - name: mc-publish-fabric
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          version: ${{ steps.version.outputs.value }}
+          curseforge-id: 1311706
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          github-token: ${{ secrets.GIT_TOKEN }}
+          modrinth-id: z0nJlqgw
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files-primary: fabric/build/libs/!(*source*|*dev*|*javadoc*|*slim*).jar
+          version-type: release
+          loaders: fabric
+          game-versions: 1.20.1
+          java: 17
+          name: ""
+          changelog-file: changelog.*
+          curseforge-dependencies:
+            667299@3.6.6+1.20.1-fabric(required)
+          modrinth-dependencies:
+            1eAoo2KR@3.6.6+1.20.1-fabric(required)
+      - name: Nuke Changelog dot txt
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: changelog.txt
+          write-mode: overwrite
+          contents: |
+            CHANGELOG:
+      - name: Increment version variable
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.2.3
+        with:
+          current-version: ${{ steps.version.outputs.value }}
+          version-fragment: 'hotfix'
+      - name: Replace single file
+        uses: richardrigutins/replace-in-files@v2
+        with:
+          files: 'gradle.properties'
+          search-text: ${{ steps.version.outputs.value }}
+          replacement-text: ${{ steps.bump_version.outputs.next-version }}
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GIT_TOKEN}}
+          branch: ${{ github.ref }}
+          force: true

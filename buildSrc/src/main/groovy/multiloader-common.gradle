@@ -126,6 +126,7 @@ processResources {
     }
 
     inputs.properties(expandProps)
+    project.version=mod_version
 }
 
 publishing {
