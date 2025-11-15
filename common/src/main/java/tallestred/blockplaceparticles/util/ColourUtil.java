@@ -1,5 +1,6 @@
 package tallestred.blockplaceparticles.util;
 
+import net.minecraft.world.level.block.Blocks;
 import tallestred.blockplaceparticles.mixin.accessor.SpriteContentsAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.SpriteContents;
@@ -9,6 +10,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ColourUtil {
@@ -21,7 +23,7 @@ public class ColourUtil {
      * @return the average colour in an array of a, r, g, b
      */
     public static int[] getAverageBlockColour(BlockState blockState) {
-        TextureAtlasSprite particleSprite = Minecraft.getInstance().getBlockRenderer().getBlockModel(blockState).getParticleIcon();
+        TextureAtlasSprite particleSprite = blockState.getBlock() == Blocks.GRASS ? TextureHelpers.getSpriteFromBlockAtlas(new ResourceLocation("block/grass_block_top")) : Minecraft.getInstance().getBlockRenderer().getBlockModel(blockState).getParticleIcon();
         ResourceLocation particleSpriteLocation = particleSprite.contents().name();
         if (colourCache.containsKey(particleSpriteLocation)) {
             return ARGBint_to_ARGB(colourCache.get(particleSpriteLocation));
@@ -29,6 +31,14 @@ public class ColourUtil {
         int average = calculateAverageSpriteColour(particleSprite);
         colourCache.put(particleSpriteLocation, average);
         return ARGBint_to_ARGB(average);
+    }
+
+    /**
+     * Converts an int in rgb decimal format to an array of a, r, g, b
+     */
+    public static int[] RGBint_to_ARGB(int rgb) {
+        int[] rgbArray = RGBint_to_RGB(rgb);
+        return new int[]{255, rgbArray[0], rgbArray[1], rgbArray[2]};
     }
 
     /**
@@ -86,6 +96,7 @@ public class ColourUtil {
 
         return ABGRint_to_RGBA(sampledColour);
     }
+
 
     /**
      * Clears all calculated average colours
@@ -146,4 +157,24 @@ public class ColourUtil {
         int b = rgb & 0xFF;
         return new int[]{r, g, b};
     }
+
+    /**
+     * Multiply two colours together. The inputs can be either ARGB or RGB, but they must both be the same format
+     *
+     * @return the colour in ARGB or RGB
+     */
+    public static int[] multiplyColours(int[] colour1, int[] colour2) {
+        if (colour1.length != colour2.length) {
+            throw new IllegalArgumentException(ColourUtil.class.getName() + "#multiplyColours: colour1 and colour2 must both be either ARGB or RGB arrays. colour1: " + Arrays.toString(colour1) + ", colour2: " + Arrays.toString(colour2));
+        }
+        if (!(colour1.length == 4 || colour1.length == 3)) {
+            throw new IllegalArgumentException(ColourUtil.class.getName() + "#multiplyColours: both colours must have 4 or 3 values. colour1: " + Arrays.toString(colour1) + ", colour2: " + Arrays.toString(colour2));
+        }
+        int[] multipliedColour = new int[colour1.length];
+        for (int i = 0; i < colour1.length; i++) {
+            multipliedColour[i] = (int) (Mth.clamp((colour1[i] / 255f) * (colour2[i] / 255f), 0f, 255f) * 255);
+        }
+        return multipliedColour;
+    }
+
 }
