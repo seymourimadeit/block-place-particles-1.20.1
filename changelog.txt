@@ -1,1 +1,2 @@
 CHANGELOG:
+- fix tree leave color inconsistencies with resource packs
