@@ -26,11 +26,13 @@ public abstract class BucketItem {
     private void spawnFluidParticlesOnBucketEmpty(Player player, LevelAccessor levelAccessor, BlockPos fluidPos, CallbackInfo ci) {
         if(levelAccessor.isClientSide()) {
             Fluid placedFluid = this.content;
+            if(placedFluid != null){
             FluidState placedFluidState = content.defaultFluidState();
 
-            if(!(levelAccessor.dimensionType().ultraWarm() && placedFluidState.is(FluidTags.WATER))) {
-                ParticleInteractionsLogging.debugInfo("Bucket of " + placedFluid.builtInRegistryHolder().key().location() + " placed at " + fluidPos.toShortString());
-                SpawnParticles.spawnFluidPlacedParticle(levelAccessor, fluidPos, placedFluid);
+                if(!(levelAccessor.dimensionType().ultraWarm() && placedFluidState.is(FluidTags.WATER))) {
+                    ParticleInteractionsLogging.debugInfo("Bucket of " + placedFluid.builtInRegistryHolder().key().location() + " placed at " + fluidPos.toShortString());
+                    SpawnParticles.spawnFluidPlacedParticle(levelAccessor, fluidPos, placedFluid);
+                }
             }
         }
     }
